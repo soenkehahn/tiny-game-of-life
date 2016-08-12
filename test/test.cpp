@@ -9,19 +9,19 @@ using namespace std;
 
 #include <iostream>
 
-bool fails = false;
+int fails = 0;
 
 void assertEquals(int a, int b) {
   if (a != b) {
     printf("FAILURE: not equal: %i != %i\n", a, b);
-    fails = true;
+    fails++;
   }
 }
 
 void assertEqualStrings(char* a, char* b) {
   if (strcmp(a, b)) {
     printf("FAILURE: not equal: %s != %s\n", a, b);
-    fails = true;
+    fails++;
   }
 }
 
@@ -110,8 +110,8 @@ int main() {
   testGetCell();
   testNeighbors();
 
-  if (fails) {
-    printf("Failed!\n");
+  if (fails > 0) {
+    printf("Failed: %i\n", fails);
     exit(1);
   }
 }
