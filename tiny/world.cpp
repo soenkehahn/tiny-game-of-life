@@ -21,8 +21,12 @@ void setCell(world w, int x, int y, bool v) {
 }
 
 bool getCell(world w, int x, int y) {
-  bool* result = (bool*) w._cells + y * w.width + x;
-  return *result;
+  if (x < 0 || y < 0 || x >= w.width || y >= w.height) {
+    return 0;
+  } else {
+    bool* result = (bool*) w._cells + y * w.width + x;
+    return *result;
+  }
 }
 
 void traverse(world w, traversal f) {

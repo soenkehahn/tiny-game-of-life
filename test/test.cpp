@@ -80,11 +80,22 @@ void testTraverse() {
   assertEqualStrings(traversalActions[4], "END");
 }
 
+void testGetCell() {
+  world w = worldInit(10, 10);
+  traverse(w, [] (world w, int x, int y) { setCell(w, x, y, true); });
+  assertEquals(getCell(w, -1, -1), 0);
+  assertEquals(getCell(w, 3, 5), 1);
+  assertEquals(getCell(w, 10, 5), 0);
+  assertEquals(getCell(w, 5, 10), 0);
+  assertEquals(getCell(w, 12, 12), 0);
+}
+
 int main() {
   testInit();
   testSetCell();
   testLoop();
   testTraverse();
+  testGetCell();
 
   if (fails) {
     printf("Failed!\n");
