@@ -9,7 +9,7 @@ world worldInit(int w, int h) {
 
   for (int x = 0; x < w; x++) {
 		for (int y = 0; y < h; y++) {
-			setCell(result, x, y, rand() % 2);
+			setCell(result, x, y, false);
 		}
 	}
   return result;

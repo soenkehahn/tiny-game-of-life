@@ -15,6 +15,9 @@ void setup(void) {
   display.begin();
   display.setBrightness(10);
   srand(time(0));
+  traverse(w, [] (world w, int x, int y) {
+    setCell(w, x, y, rand() % 2);
+  });
 }
 
 void loop() {
