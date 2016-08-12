@@ -48,3 +48,21 @@ int getNeighbors(world w, int x, int y) {
   }
   return result;
 };
+
+bool lives(bool alive, int n) {
+  if (alive) {
+    if (n < 2) {
+      return false;
+    } else if (n > 3) {
+      return false;
+    } else {
+      return true;
+    }
+  } else {
+    if (n == 3) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}

@@ -102,6 +102,28 @@ void testNeighbors() {
   assertEquals(getNeighbors(w, 1, 1), 4);
 }
 
+void testLives() {
+  assertEquals(lives(true, 0), false);
+  assertEquals(lives(true, 1), false);
+  assertEquals(lives(true, 2), true);
+  assertEquals(lives(true, 3), true);
+  assertEquals(lives(true, 4), false);
+  assertEquals(lives(true, 5), false);
+  assertEquals(lives(true, 6), false);
+  assertEquals(lives(true, 7), false);
+  assertEquals(lives(true, 8), false);
+
+  assertEquals(lives(false, 0), false);
+  assertEquals(lives(false, 1), false);
+  assertEquals(lives(false, 2), false);
+  assertEquals(lives(false, 3), true);
+  assertEquals(lives(false, 4), false);
+  assertEquals(lives(false, 5), false);
+  assertEquals(lives(false, 6), false);
+  assertEquals(lives(false, 7), false);
+  assertEquals(lives(false, 8), false);
+}
+
 int main() {
   testInit();
   testSetCell();
@@ -109,6 +131,7 @@ int main() {
   testTraverse();
   testGetCell();
   testNeighbors();
+  testLives();
 
   if (fails > 0) {
     printf("Failed: %i\n", fails);

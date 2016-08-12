@@ -16,3 +16,5 @@ typedef void (*traversal) (world w, int x, int y);
 void traverse(world w, traversal f);
 
 int getNeighbors(world w, int x, int y);
+
+bool lives(bool alive, int n);
