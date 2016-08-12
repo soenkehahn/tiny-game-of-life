@@ -8,16 +8,18 @@
 
 TinyScreen display = TinyScreen(TinyScreenPlus);
 
-world* w = newWorld(40, 30);
+simulation* sim;
 
 void setup(void) {
   Wire.begin(); //initialize I2C before we can initialize TinyScreen- not needed for TinyScreen+
   display.begin();
   display.setBrightness(10);
-  srand(time(0));
+
+  world* w = newWorld(96, 64);
   traverse(w, [] (world* w, int x, int y) {
     setCell(w, x, y, rand() % 2);
   });
+  sim = newSimulation(w);
 }
 
 void drawCell(world* w, int x, int y) {
@@ -29,6 +31,6 @@ void drawCell(world* w, int x, int y) {
 }
 
 void loop() {
-  traverse(w, drawCell);
-  delay(1000);
+  traverse(sim->current, drawCell);
+  stepSimulation(sim);
 }
