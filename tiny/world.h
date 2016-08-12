@@ -5,7 +5,7 @@ struct world {
   void* _cells;
 };
 
-world* worldInit(int w, int h);
+world* newWorld(int w, int h);
 
 bool getCell(world* w, int x, int y);
 

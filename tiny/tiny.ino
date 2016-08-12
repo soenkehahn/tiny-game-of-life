@@ -8,7 +8,7 @@
 
 TinyScreen display = TinyScreen(TinyScreenPlus);
 
-world* w = worldInit(40, 30);
+world* w = newWorld(40, 30);
 
 void setup(void) {
   Wire.begin(); //initialize I2C before we can initialize TinyScreen- not needed for TinyScreen+

@@ -3,7 +3,7 @@
 
 #include "world.h"
 
-world* worldInit(int w, int h) {
+world* newWorld(int w, int h) {
   void* cells = malloc(sizeof(bool) * w * h);
   world* result = (world*) malloc(sizeof(world));
   result->width = w;
@@ -85,7 +85,7 @@ void step(world* old, world* next) {
 simulation* newSimulation(world* w) {
   simulation* result = (simulation*) malloc(sizeof(simulation));
   result->current = w;
-  result->__next = worldInit(w->width, w->height);
+  result->__next = newWorld(w->width, w->height);
   return result;
 }
 
