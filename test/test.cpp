@@ -92,7 +92,6 @@ void testGetCell() {
 
 void testNeighbors() {
   world w = worldInit(10, 10);
-  traverse(w, [] (world w, int x, int y) { setCell(w, x, y, false); });
   setCell(w, 0, 0, true);
   setCell(w, 1, 0, true);
   setCell(w, 2, 1, true);
@@ -124,6 +123,23 @@ void testLives() {
   assertEquals(lives(false, 8), false);
 }
 
+void testStep() {
+  world green = worldInit(5, 5);
+  setCell(green, 1, 0, true);
+  setCell(green, 0, 1, true);
+  setCell(green, 1, 1, true);
+  setCell(green, 2, 1, true);
+  setCell(green, 1, 2, true);
+  world blue = worldInit(5, 5);
+
+  step(&green, &blue);
+
+  assertEquals(getCell(blue, 0, 0), true);
+  assertEquals(getCell(blue, 1, 0), true);
+  assertEquals(getCell(blue, 1, 1), false);
+  assertEquals(getCell(blue, 4, 4), false);
+}
+
 int main() {
   testInit();
   testSetCell();
@@ -132,6 +148,7 @@ int main() {
   testGetCell();
   testNeighbors();
   testLives();
+  testStep();
 
   if (fails > 0) {
     printf("Failed: %i\n", fails);

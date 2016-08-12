@@ -18,3 +18,5 @@ void traverse(world w, traversal f);
 int getNeighbors(world w, int x, int y);
 
 bool lives(bool alive, int n);
+
+void step(world* old, world* next);

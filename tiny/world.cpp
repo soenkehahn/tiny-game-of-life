@@ -66,3 +66,15 @@ bool lives(bool alive, int n) {
     }
   }
 }
+
+world* __stepOld;
+
+void __stepTraversal(world w, int x, int y) {
+  bool alive = getCell(*__stepOld, x, y);
+  setCell(w, x, y, lives(alive, getNeighbors(*__stepOld, x, y)));
+};
+
+void step(world* old, world* next) {
+  __stepOld = old;
+  traverse(*next, __stepTraversal);
+}
