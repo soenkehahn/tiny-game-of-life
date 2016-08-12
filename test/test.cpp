@@ -98,6 +98,8 @@ void testNeighbors() {
   setCell(w, 2, 1, true);
   setCell(w, 2, 2, true);
   assertEquals(getNeighbors(w, 1, 1), 4);
+  setCell(w, 1, 1, true);
+  assertEquals(getNeighbors(w, 1, 1), 4);
 }
 
 int main() {

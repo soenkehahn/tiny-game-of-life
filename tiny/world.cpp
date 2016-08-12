@@ -41,7 +41,9 @@ int getNeighbors(world w, int x, int y) {
   int result = 0;
   for (int sy = -1; sy <= 1; sy++) {
     for (int sx = -1; sx <= 1; sx++) {
-      result = result + getCell(w, x + sx, y + sy);
+      if (sx != 0 || sy != 0) {
+        result = result + getCell(w, x + sx, y + sy);
+      }
     }
   }
   return result;
