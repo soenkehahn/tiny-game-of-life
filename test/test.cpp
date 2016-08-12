@@ -90,12 +90,23 @@ void testGetCell() {
   assertEquals(getCell(w, 12, 12), 0);
 }
 
+void testNeighbors() {
+  world w = worldInit(10, 10);
+  traverse(w, [] (world w, int x, int y) { setCell(w, x, y, false); });
+  setCell(w, 0, 0, true);
+  setCell(w, 1, 0, true);
+  setCell(w, 2, 1, true);
+  setCell(w, 2, 2, true);
+  assertEquals(getNeighbors(w, 1, 1), 4);
+}
+
 int main() {
   testInit();
   testSetCell();
   testLoop();
   testTraverse();
   testGetCell();
+  testNeighbors();
 
   if (fails) {
     printf("Failed!\n");
