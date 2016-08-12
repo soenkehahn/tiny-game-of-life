@@ -5,18 +5,27 @@ struct world {
   void* _cells;
 };
 
-world worldInit(int w, int h);
+world* worldInit(int w, int h);
 
-bool getCell(world w, int x, int y);
+bool getCell(world* w, int x, int y);
 
-void setCell(world w, int x, int y, bool v);
+void setCell(world* w, int x, int y, bool v);
 
-typedef void (*traversal) (world w, int x, int y);
+typedef void (*traversal) (world* w, int x, int y);
 
-void traverse(world w, traversal f);
+void traverse(world* w, traversal f);
 
-int getNeighbors(world w, int x, int y);
+int getNeighbors(world* w, int x, int y);
 
 bool lives(bool alive, int n);
 
 void step(world* old, world* next);
+
+struct simulation {
+  world* current;
+  world* __next;
+};
+
+simulation* newSimulation(world* w);
+
+void stepSimulation(simulation* sim);

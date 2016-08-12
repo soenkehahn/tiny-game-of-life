@@ -26,12 +26,12 @@ void assertEqualStrings(char* a, char* b) {
 }
 
 void testInit() {
-  world w = worldInit(10, 10);
+  world* w = worldInit(10, 10);
   printf("cell: %i\n", getCell(w, 3, 3));
 }
 
 void testSetCell() {
-  world w = worldInit(10, 10);
+  world* w = worldInit(10, 10);
   setCell(w, 5, 5, true);
   assertEquals(getCell(w, 5, 5), true);
   setCell(w, 5, 5, false);
@@ -39,14 +39,14 @@ void testSetCell() {
 }
 
 void testLoop() {
-  world w = worldInit(10, 10);
-  for (int x = 0; x < w.width; x++) {
-    for (int y = 0; y < w.height; y++) {
+  world* w = worldInit(10, 10);
+  for (int x = 0; x < w->width; x++) {
+    for (int y = 0; y < w->height; y++) {
       setCell(w, x, y, true);
     }
   }
-  for (int x = 0; x < w.width; x++) {
-    for (int y = 0; y < w.height; y++) {
+  for (int x = 0; x < w->width; x++) {
+    for (int y = 0; y < w->height; y++) {
       assertEquals(true, getCell(w, x, y));
     }
   }
@@ -60,10 +60,10 @@ void testTraverse() {
     traversalActions[i] = "END";
   }
 
-  world w = worldInit(2, 2);
+  world* w = worldInit(2, 2);
 
   traversal f = []
-    (world w, int x, int y) {
+    (world* w, int x, int y) {
       setCell(w, x, y, true);
 
       char* s = (char*) malloc(100);
@@ -81,8 +81,8 @@ void testTraverse() {
 }
 
 void testGetCell() {
-  world w = worldInit(10, 10);
-  traverse(w, [] (world w, int x, int y) { setCell(w, x, y, true); });
+  world* w = worldInit(10, 10);
+  traverse(w, [] (world* w, int x, int y) { setCell(w, x, y, true); });
   assertEquals(getCell(w, -1, -1), 0);
   assertEquals(getCell(w, 3, 5), 1);
   assertEquals(getCell(w, 10, 5), 0);
@@ -91,7 +91,7 @@ void testGetCell() {
 }
 
 void testNeighbors() {
-  world w = worldInit(10, 10);
+  world* w = worldInit(10, 10);
   setCell(w, 0, 0, true);
   setCell(w, 1, 0, true);
   setCell(w, 2, 1, true);
@@ -124,20 +124,39 @@ void testLives() {
 }
 
 void testStep() {
-  world green = worldInit(5, 5);
+  world* green = worldInit(5, 5);
   setCell(green, 1, 0, true);
   setCell(green, 0, 1, true);
   setCell(green, 1, 1, true);
   setCell(green, 2, 1, true);
   setCell(green, 1, 2, true);
-  world blue = worldInit(5, 5);
+  world* blue = worldInit(5, 5);
 
-  step(&green, &blue);
+  step(green, blue);
 
   assertEquals(getCell(blue, 0, 0), true);
   assertEquals(getCell(blue, 1, 0), true);
   assertEquals(getCell(blue, 1, 1), false);
   assertEquals(getCell(blue, 4, 4), false);
+}
+
+void testSimulation() {
+  world* w = worldInit(3, 3);
+  setCell(w, 0, 1, true);
+  setCell(w, 1, 1, true);
+  setCell(w, 2, 1, true);
+
+  simulation* sim = newSimulation(w);
+  stepSimulation(sim);
+
+  assertEquals(getCell(sim->current, 0, 1), false);
+  assertEquals(getCell(sim->current, 1, 1), true);
+  assertEquals(getCell(sim->current, 1, 0), true);
+
+  stepSimulation(sim);
+  assertEquals(getCell(sim->current, 0, 1), true);
+  assertEquals(getCell(sim->current, 1, 1), true);
+  assertEquals(getCell(sim->current, 1, 0), false);
 }
 
 int main() {
@@ -149,6 +168,7 @@ int main() {
   testNeighbors();
   testLives();
   testStep();
+  testSimulation();
 
   if (fails > 0) {
     printf("Failed: %i\n", fails);
