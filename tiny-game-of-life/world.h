@@ -5,7 +5,7 @@ struct grid {
   bool* _cells;
 };
 
-grid* newWorld(int w, int h);
+grid* newGrid(int w, int h);
 
 bool getCell(grid* w, int x, int y);
 
@@ -26,6 +26,6 @@ struct doubleBufferedGrid {
   grid* old;
 };
 
-doubleBufferedGrid* newSimulation(grid* w);
+doubleBufferedGrid* newDoubleBufferedGrid(grid* w);
 
 void stepSimulation(doubleBufferedGrid* sim);

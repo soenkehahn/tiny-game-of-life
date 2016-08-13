@@ -3,7 +3,7 @@
 
 #include "world.h"
 
-grid* newWorld(int w, int h) {
+grid* newGrid(int w, int h) {
   bool* cells = (bool*) malloc(sizeof(bool) * w * h);
   grid* result = (grid*) malloc(sizeof(grid));
   result->width = w;
@@ -82,10 +82,10 @@ void step(grid* old, grid* next) {
   traverse(next, __stepTraversal);
 }
 
-doubleBufferedGrid* newSimulation(grid* w) {
+doubleBufferedGrid* newDoubleBufferedGrid(grid* w) {
   doubleBufferedGrid* result = (doubleBufferedGrid*) malloc(sizeof(doubleBufferedGrid));
   result->current = w;
-  result->old = newWorld(w->width, w->height);
+  result->old = newGrid(w->width, w->height);
   return result;
 }
 

@@ -16,11 +16,11 @@ void setup(void) {
   display.setBrightness(10);
   display.drawRect(0, 0, 95, 64, TSRectangleFilled, TS_8b_DarkBlue);
 
-  grid* w = newWorld(96, 64);
+  grid* w = newGrid(96, 64);
   traverse(w, [] (grid* w, int x, int y) {
     setCell(w, x, y, rand() % 2);
   });
-  sim = newSimulation(w);
+  sim = newDoubleBufferedGrid(w);
 }
 
 void drawCell(grid* w, int x, int y) {
