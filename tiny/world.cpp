@@ -4,7 +4,7 @@
 #include "world.h"
 
 world* newWorld(int w, int h) {
-  void* cells = malloc(sizeof(bool) * w * h);
+  bool* cells = (bool*) malloc(sizeof(bool) * w * h);
   world* result = (world*) malloc(sizeof(world));
   result->width = w;
   result->height = h;
@@ -22,13 +22,13 @@ bool getCell(world* w, int x, int y) {
   if (x < 0 || y < 0 || x >= w->width || y >= w->height) {
     return 0;
   } else {
-    bool* result = (bool*) w->_cells + y * w->width + x;
+    bool* result = w->_cells + y * w->width + x;
     return *result;
   }
 }
 
 void setCell(world* w, int x, int y, bool v) {
-  bool* result = (bool*) w->_cells + y * w->width + x;
+  bool* result = w->_cells + y * w->width + x;
   *result = v;
 }
 

@@ -2,7 +2,7 @@
 struct world {
   int width;
   int height;
-  void* _cells;
+  bool* _cells;
 };
 
 world* newWorld(int w, int h);
