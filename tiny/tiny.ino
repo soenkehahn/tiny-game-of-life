@@ -24,9 +24,9 @@ void setup(void) {
 
 void drawCell(world* w, int x, int y) {
   if (getCell(w, x, y)) {
-    display.drawPixel(x, y, TS_8b_White);
+    display.drawPixel(x, y, TS_8b_Green);
   } else {
-    display.drawPixel(x, y, TS_8b_Black);
+    display.drawPixel(x, y, TS_8b_DarkBlue);
   }
 }
 
