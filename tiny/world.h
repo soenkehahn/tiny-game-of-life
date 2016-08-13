@@ -1,31 +1,31 @@
 
-struct world {
+struct grid {
   int width;
   int height;
   bool* _cells;
 };
 
-world* newWorld(int w, int h);
+grid* newWorld(int w, int h);
 
-bool getCell(world* w, int x, int y);
+bool getCell(grid* w, int x, int y);
 
-void setCell(world* w, int x, int y, bool v);
+void setCell(grid* w, int x, int y, bool v);
 
-typedef void (*traversal) (world* w, int x, int y);
+typedef void (*traversal) (grid* w, int x, int y);
 
-void traverse(world* w, traversal f);
+void traverse(grid* w, traversal f);
 
-int getNeighbors(world* w, int x, int y);
+int getNeighbors(grid* w, int x, int y);
 
 bool lives(bool alive, int n);
 
-void step(world* old, world* next);
+void step(grid* old, grid* next);
 
-struct simulation {
-  world* current;
-  world* old;
+struct doubleBufferedGrid {
+  grid* current;
+  grid* old;
 };
 
-simulation* newSimulation(world* w);
+doubleBufferedGrid* newSimulation(grid* w);
 
-void stepSimulation(simulation* sim);
+void stepSimulation(doubleBufferedGrid* sim);

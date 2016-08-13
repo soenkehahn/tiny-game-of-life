@@ -26,12 +26,12 @@ void assertEqualStrings(char* a, char* b) {
 }
 
 void testInit() {
-  world* w = newWorld(10, 10);
+  grid* w = newWorld(10, 10);
   printf("cell: %i\n", getCell(w, 3, 3));
 }
 
 void testSetCell() {
-  world* w = newWorld(10, 10);
+  grid* w = newWorld(10, 10);
   setCell(w, 5, 5, true);
   assertEquals(getCell(w, 5, 5), true);
   setCell(w, 5, 5, false);
@@ -39,7 +39,7 @@ void testSetCell() {
 }
 
 void testLoop() {
-  world* w = newWorld(10, 10);
+  grid* w = newWorld(10, 10);
   for (int x = 0; x < w->width; x++) {
     for (int y = 0; y < w->height; y++) {
       setCell(w, x, y, true);
@@ -60,10 +60,10 @@ void testTraverse() {
     traversalActions[i] = "END";
   }
 
-  world* w = newWorld(2, 2);
+  grid* w = newWorld(2, 2);
 
   traversal f = []
-    (world* w, int x, int y) {
+    (grid* w, int x, int y) {
       setCell(w, x, y, true);
 
       char* s = (char*) malloc(100);
@@ -81,8 +81,8 @@ void testTraverse() {
 }
 
 void testGetCell() {
-  world* w = newWorld(10, 10);
-  traverse(w, [] (world* w, int x, int y) { setCell(w, x, y, true); });
+  grid* w = newWorld(10, 10);
+  traverse(w, [] (grid* w, int x, int y) { setCell(w, x, y, true); });
   assertEquals(getCell(w, -1, -1), 0);
   assertEquals(getCell(w, 3, 5), 1);
   assertEquals(getCell(w, 10, 5), 0);
@@ -91,7 +91,7 @@ void testGetCell() {
 }
 
 void testNeighbors() {
-  world* w = newWorld(10, 10);
+  grid* w = newWorld(10, 10);
   setCell(w, 0, 0, true);
   setCell(w, 1, 0, true);
   setCell(w, 2, 1, true);
@@ -124,13 +124,13 @@ void testLives() {
 }
 
 void testStep() {
-  world* green = newWorld(5, 5);
+  grid* green = newWorld(5, 5);
   setCell(green, 1, 0, true);
   setCell(green, 0, 1, true);
   setCell(green, 1, 1, true);
   setCell(green, 2, 1, true);
   setCell(green, 1, 2, true);
-  world* blue = newWorld(5, 5);
+  grid* blue = newWorld(5, 5);
 
   step(green, blue);
 
@@ -141,12 +141,12 @@ void testStep() {
 }
 
 void testSimulation() {
-  world* w = newWorld(3, 3);
+  grid* w = newWorld(3, 3);
   setCell(w, 0, 1, true);
   setCell(w, 1, 1, true);
   setCell(w, 2, 1, true);
 
-  simulation* sim = newSimulation(w);
+  doubleBufferedGrid* sim = newSimulation(w);
   stepSimulation(sim);
 
   assertEquals(getCell(sim->current, 0, 1), false);

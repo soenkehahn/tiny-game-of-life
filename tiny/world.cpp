@@ -3,9 +3,9 @@
 
 #include "world.h"
 
-world* newWorld(int w, int h) {
+grid* newWorld(int w, int h) {
   bool* cells = (bool*) malloc(sizeof(bool) * w * h);
-  world* result = (world*) malloc(sizeof(world));
+  grid* result = (grid*) malloc(sizeof(grid));
   result->width = w;
   result->height = h;
   result->_cells = cells;
@@ -18,7 +18,7 @@ world* newWorld(int w, int h) {
   return result;
 };
 
-bool getCell(world* w, int x, int y) {
+bool getCell(grid* w, int x, int y) {
   if (x < 0 || y < 0 || x >= w->width || y >= w->height) {
     return 0;
   } else {
@@ -27,12 +27,12 @@ bool getCell(world* w, int x, int y) {
   }
 }
 
-void setCell(world* w, int x, int y, bool v) {
+void setCell(grid* w, int x, int y, bool v) {
   bool* result = w->_cells + y * w->width + x;
   *result = v;
 }
 
-void traverse(world* w, traversal f) {
+void traverse(grid* w, traversal f) {
   for (int y = 0; y < w->height; y++) {
     for (int x = 0; x < w->width; x++) {
       f(w, x, y);
@@ -40,7 +40,7 @@ void traverse(world* w, traversal f) {
   }
 }
 
-int getNeighbors(world* w, int x, int y) {
+int getNeighbors(grid* w, int x, int y) {
   int result = 0;
   for (int sy = -1; sy <= 1; sy++) {
     for (int sx = -1; sx <= 1; sx++) {
@@ -70,27 +70,27 @@ bool lives(bool alive, int n) {
   }
 }
 
-world* __stepOld;
+grid* __stepOld;
 
-void __stepTraversal(world* w, int x, int y) {
+void __stepTraversal(grid* w, int x, int y) {
   bool alive = getCell(__stepOld, x, y);
   setCell(w, x, y, lives(alive, getNeighbors(__stepOld, x, y)));
 };
 
-void step(world* old, world* next) {
+void step(grid* old, grid* next) {
   __stepOld = old;
   traverse(next, __stepTraversal);
 }
 
-simulation* newSimulation(world* w) {
-  simulation* result = (simulation*) malloc(sizeof(simulation));
+doubleBufferedGrid* newSimulation(grid* w) {
+  doubleBufferedGrid* result = (doubleBufferedGrid*) malloc(sizeof(doubleBufferedGrid));
   result->current = w;
   result->old = newWorld(w->width, w->height);
   return result;
 }
 
-void stepSimulation(simulation* sim) {
-  world* temp = sim->old;
+void stepSimulation(doubleBufferedGrid* sim) {
+  grid* temp = sim->old;
   sim->old = sim->current;
   sim->current = temp;
 
