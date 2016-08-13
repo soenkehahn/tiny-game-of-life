@@ -85,14 +85,14 @@ void step(world* old, world* next) {
 simulation* newSimulation(world* w) {
   simulation* result = (simulation*) malloc(sizeof(simulation));
   result->current = w;
-  result->__next = newWorld(w->width, w->height);
+  result->old = newWorld(w->width, w->height);
   return result;
 }
 
 void stepSimulation(simulation* sim) {
-  step(sim->current, sim->__next);
-
-  world* temp = sim->__next;
-  sim->__next = sim->current;
+  world* temp = sim->old;
+  sim->old = sim->current;
   sim->current = temp;
+
+  step(sim->old, sim->current);
 }

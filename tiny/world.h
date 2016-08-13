@@ -23,7 +23,7 @@ void step(world* old, world* next);
 
 struct simulation {
   world* current;
-  world* __next;
+  world* old;
 };
 
 simulation* newSimulation(world* w);

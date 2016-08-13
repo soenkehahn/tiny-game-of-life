@@ -14,6 +14,7 @@ void setup(void) {
   Wire.begin(); //initialize I2C before we can initialize TinyScreen- not needed for TinyScreen+
   display.begin();
   display.setBrightness(10);
+  display.drawRect(0, 0, 95, 64, TSRectangleFilled, TS_8b_DarkBlue);
 
   world* w = newWorld(96, 64);
   traverse(w, [] (world* w, int x, int y) {
@@ -23,10 +24,13 @@ void setup(void) {
 }
 
 void drawCell(world* w, int x, int y) {
-  if (getCell(w, x, y)) {
-    display.drawPixel(x, y, TS_8b_Green);
-  } else {
-    display.drawPixel(x, y, TS_8b_DarkBlue);
+  bool currentCell = getCell(w, x, y);
+  if (currentCell != getCell(sim->old, x, y)) {
+    if (currentCell) {
+      display.drawPixel(x, y, TS_8b_Green);
+    } else {
+      display.drawPixel(x, y, TS_8b_DarkBlue);
+    }
   }
 }
 
